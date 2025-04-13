@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { useActionData, useNavigation, useSubmit } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
 import {
   Page,
   Layout,
-  Text,
   Card,
   BlockStack,
-  Box,
-  List,
-  Link,
-  InlineStack,
+  FormLayout,
+  TextField,
+  Form,
+  Button
+
+} from "@shopify/polaris";
 
 import { authenticate } from "../shopify.server";
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -18,7 +21,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return null;
 };
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const { admin } = await authenticate.admin(request);
+  const admin  = await authenticate.admin(request);
   return null;
 };
 
@@ -26,6 +29,10 @@ export default function Index() {
 
   const [author, setAuthor] = useState('');
   const [testimonial, setTestimonial] = useState('');
+
+  const handleSubmit = () => {
+    console.log("OK");
+  };
 
   return (
     <Page>
@@ -38,16 +45,28 @@ export default function Index() {
                   <TextField
                     value={testimonial}
                     onChange={setTestimonial}
-                    label="Email"
+                    label="Testimonial"
                     type="text"
-                    autoComplete="email"
+                    autoComplete="true"
                     helpText={
                     <span>
-                      We’ll use this email address to inform you on future changes to
-                      Polaris.
+                      It will display on the app's on the store
                     </span>
                     }
                   />
+                  <TextField
+                    value={author}
+                    onChange={setAuthor}
+                    label="Author"
+                    type="text"
+                    autoComplete= "true"
+                    helpText={
+                    <span>
+                      It will display on the app's on the store
+                    </span>
+                    }
+                  />
+
 
                   <Button submit>Submit</Button>
                 </FormLayout>
